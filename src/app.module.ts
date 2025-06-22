@@ -1,10 +1,51 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppService } from './app.service';
+import { AppController } from './app.controller';
+import { TypedConfigService } from './config/typed-config.service';
+import { typeOrmConfig } from './config/database.config';
+import { Request } from 'express';
+import { authConfig } from './config/auth.config';
+import { appConfigSchema } from './config/config.types';
 
 @Module({
-  imports: [],
+  imports: [
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+    }),
+
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [typeOrmConfig, authConfig],
+      validationSchema: appConfigSchema,
+      validationOptions: {
+        abortEarly: true,
+      },
+    }),
+
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      graphiql: true,
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      sortSchema: true,
+      context: ({ req, res }: { req: Request; res: Response }) => ({
+        req,
+        res,
+      }),
+    }),
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: TypedConfigService,
+      useExisting: ConfigService,
+    },
+  ],
 })
 export class AppModule {}
