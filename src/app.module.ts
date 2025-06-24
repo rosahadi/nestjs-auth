@@ -11,12 +11,19 @@ import { typeOrmConfig } from './config/database.config';
 import { Request } from 'express';
 import { authConfig } from './config/auth.config';
 import { appConfigSchema } from './config/config.types';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { User } from './user/user.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
+      useFactory: async (configService: TypedConfigService) => ({
+        ...(await configService.get('database')),
+        entities: [User],
+      }),
     }),
 
     ConfigModule.forRoot({
@@ -38,6 +45,9 @@ import { appConfigSchema } from './config/config.types';
         res,
       }),
     }),
+
+    UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [
