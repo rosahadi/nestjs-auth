@@ -33,6 +33,10 @@ export class User {
   @Column({ default: false })
   isEmailVerified: boolean;
 
+  @Field(() => Date, { nullable: true })
+  @Column({ type: 'timestamp', nullable: true })
+  emailVerificationExpires: Date | null;
+
   @Field()
   @CreateDateColumn()
   createdAt: Date;
