@@ -43,7 +43,7 @@ import { User } from './user/user.entity';
       context: ({ req, res }: { req: Request; res: Response }) => ({
         req,
         res,
-      }),
+      }), // We'll need this for cookies
     }),
 
     UserModule,
