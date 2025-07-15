@@ -33,7 +33,7 @@ A production-ready authentication system built with NestJS, GraphQL, and Postgre
 
 1. Clone the repository
 ```bash
-git clone <https://github.com/rosahadi/nestjs-auth>
+git clone https://github.com/rosahadi/nestjs-auth
 cd nestjs-auth
 ```
 
@@ -71,84 +71,6 @@ npm run start:dev
 ```
 
 The GraphQL playground will be available at `http://localhost:3000/graphql`
-
-## API Usage
-
-### User Registration
-
-```graphql
-mutation {
-  signup(signupInput: {
-    name: "John Doe"
-    email: "john@example.com"
-    password: "password123"
-    passwordConfirm: "password123"
-  }) {
-    message
-  }
-}
-```
-
-### Email Verification
-
-Check your console for the verification token, then:
-
-```graphql
-mutation {
-  verifyEmail(token: "your-verification-token") {
-    user {
-      id
-      name
-      email
-      isEmailVerified
-    }
-  }
-}
-```
-
-### Login
-
-```graphql
-mutation {
-  login(loginInput: {
-    email: "john@example.com"
-    password: "password123"
-  }) {
-    user {
-      id
-      name
-      email
-      roles
-    }
-  }
-}
-```
-
-### Update Password
-
-```graphql
-mutation {
-  updatePassword(updatePasswordInput: {
-    currentPassword: "password123"
-    password: "newpassword123"
-    passwordConfirm: "newpassword123"
-  }) {
-    user {
-      id
-      name
-      email
-    }
-  }
-}
-```
-
-### Logout
-
-```graphql
-mutation {
-  logout
-}
-```
 
 ## Security Features
 
