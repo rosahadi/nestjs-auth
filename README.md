@@ -98,6 +98,15 @@ Before deploying to production:
 4. Set up proper logging and monitoring
 5. Consider implementing rate limiting for authentication endpoints
 
+## Tutorial Series
+
+This project is accompanied by a comprehensive tutorial series:
+
+- [Part 1: Foundation Setup](https://dev.to/rosahadi/nestjs-authentication-tutorial-part-1-foundation-setup-1897)
+- [Part 2: JWT Authentication & Email Verification](https://dev.to/rosahadi/nestjs-authentication-tutorial-part-2-jwt-authentication-email-verification-ike)
+
+These tutorials provide step-by-step guidance on building this authentication system from scratch.
+
 ## License
 
 This project is licensed under the MIT License.
